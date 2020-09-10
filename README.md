@@ -2,16 +2,18 @@
 
 Structure of Directories:
 
-motepro/
-      README.md
-      Note-deliverable-1
-      GROUP-INFO
-      Minutes of Meeting/
+motepro
+{
+      README.md;
+      Note-deliverable-1;
+      GROUP-INFO;
+      Minutes of Meeting(
                         Session 1
-                        Session 2
-      Project Reports/
+                        Session 2 );
+      Project Reports(
                      Deliverable 1 Report
-                     Deliverable 1 Presentation
+                     Deliverable 1 Presentation) ;
+			   }
      
       
      
