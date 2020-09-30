@@ -14,7 +14,8 @@ motepro
       Project Reports(
                      Deliverable 1 Presentation);
       Project Documents( 
-                     Deliverable 1 Report);
+                     Deliverable 1 Report
+		     Deliverable - 2.docx);
                      ) ;
 			   }
      
