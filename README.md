@@ -7,6 +7,7 @@ motepro
       README.md;
       Note-deliverable-1;
       GROUP-INFO;
+      Source code;
       Minutes of Meeting(
                         Session 1
                         Session 2 );
