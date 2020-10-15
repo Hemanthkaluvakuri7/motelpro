@@ -7,7 +7,7 @@ motepro
       README.md;
       Note-deliverable-1;
       GROUP-INFO;
-      Source code;
+      Source code(Phase 1);
       Minutes of Meeting(
                         Session 1
                         Session 2 );
@@ -15,7 +15,8 @@ motepro
                      Deliverable 1 Presentation);
       Project Documents( 
                      Deliverable 1 Report
-		     Deliverable - 2.docx);
+		     Deliverable - 2.docx
+		     );
                      ) ;
 			   }
      
