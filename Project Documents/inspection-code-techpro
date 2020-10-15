@@ -1,0 +1,326 @@
+REGISTRATION FUNCTIONALITY
+
+<form action="index.html" method="post" >
+    <div>
+        <body background = "grey.png" >
+<br>
+<br>
+<br>
+<br>
+<br>
+        <center>
+            <font color=#cc4151>  Username: <input type="text" placeholder="Enter Username" name="user" required>
+                <br><br>
+                Password: <input type="password" placeholder="Enter Password" name="psw" minlength="8" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,}$" required>
+                <br><br>
+                Email ID: <input type="email" placeholder="Enter Email ID" name="email" required>
+                <br><br>
+                <!--Mobile No: <input type="tel" placeholder="Enter phone number" maxlength="10" minlength="10"  name="pho" required>-->
+                Mobile No: <input type="tel" placeholder="Enter phone number" pattern="[0-9]*"  name="pho" required>
+                <br><br>
+                Zipcode : <input id="zip" placeholder="Enter Zipcode" name="zip" maxlength="5" pattern="[0-9]*" required>
+                <br><br>
+                <input type="radio" id="emp" name="emp" value="emp">
+                <label for="emp">Employer</label><br><br>
+                <input type="submit" name="signUP" value="SIGN UP">
+                <h2><font color=#ffb6c1>Existing User?</font> <!--<a href="login_new.php"> Login </a></h2>-->
+                <!--<h2><font color=#ffb6c1>Go back home</font> <a href="index.html"> Home </a></h2>-->
+
+        </center>
+    </div>
+</form>
+
+Explanation: The form created helps the user in the account creation process. The post function sends the form data as a Http post transaction. In this section we created five fields, username, password, phone, email, and zip code. We added few conditions for the password field in the above code. On click of sign up, if the user entered the data satisfying the field condition, we go to the next page that is the home page.
+function phone()
+        {
+            if(strlen(phone)<10)
+            {
+                echo "Value must contain 10 digits";
+                $flag=1;
+            }
+            elseif (strlen(phone)>10) {
+                echo "Value must contain 10 digits";
+            }
+
+Explanation: this php code had condition for the phone number, that the number of digits for the phone number should be exactly ten digits else account creation doesn’t happen.
+
+if(strlen($zipcode)!=5){
+            echo "Please enter a 5 digit zipcode";
+            $flag=1;
+        }
+
+Explanation: the above php code has the condition for the zipcode, the number of digits for the zipcode should be exactly five digits else registration fails.
+
+if ($flag==0)
+        {
+            $user = 'root';
+            $pass='';
+            $db='motelpro';
+
+            $mysqli= new mysqli('localhost',$user,$pass,$db) or die("LOOSER");
+
+            if (mysqli_connect_error())
+            {
+                echo 'Error: Could not connect to database. Please try again later.';
+                exit();
+            }
+
+            $mysqli->select_db("motelpro")
+            or die("<p>Unable to select the database.</p>"
+                . "<p>Error code " . mysqli_errno($mysqli)
+                . ": " . mysqli_error($mysqli)) . "</p>";
+
+            $tableName = "Customers";
+
+            $SQLstring = "INSERT INTO $tableName VALUES( NULL, '".$name."','".$password."','".$email."','".$phone."','".$zipcode."')";
+
+            $result = $mysqli->query($SQLstring);
+            if ( $result )
+
+            {
+Explanation: In the above block of code, database connection process is happening. We named the database as motelpro, if the database connection gets failed we get a message as “'Error: Could not connect to database. Please try again later.”. After connection in this part of code we are storing the customer values into the database. We created a table with table name “customers”.
+“$SQLstring = "INSERT INTO $tableName VALUES( NULL, '".$name."','".$password."','".$email."','".$phone."','".$zipcode."')";”
+The above query is used to store the entered values into the database. In the place of NULL the customer id is stored into the base, and the remaining fields are stored as shown in the above query.
+
+LOGIN PAGE: 
+
+<form method="post" >
+<div>
+     <body background = "grey.png" >
+<center>
+  <br><br>
+<h2>  <font color=#cc4151>Username:</font>
+ <input type="text" placeholder="Enter Username" name="user">
+        <br><br>
+      <font color=#cc4151>Password: </font> <input type="password" placeholder="Enter Password" name="psw"
+         >
+        <br><br><h2>
+        <input type="submit" name="login" value="LOG IN" >
+        <br>
+        <h2><font color=#ffb6c1>New User?</font> <a href="test.php"> Sign UP </a></h2>
+
+    </center>
+</form>
+
+
+Explanation: This section of code asks user to provide login credentials.
+
+
+<?php
+
+if(isset($_POST["login"]))
+{
+    if($_POST["login"])
+    {
+        
+        $password = $_POST["psw"];
+        $name = $_POST["user"];
+             $user = 'root';
+             $pass='';
+             $db='motelpro';
+
+             $mysqli= new mysqli('localhost',$user,$pass,$db) or die("LOOSER");
+
+                                    if (mysqli_connect_error())
+                                    {
+                                            echo 'Error: Could not connect to database. Please try again later.';
+                                            exit();
+                                    }
+
+                                    $mysqli->select_db("motelpro")
+                                            or die("<p>Unable to select the database.</p>"
+                                            . "<p>Error code " . mysqli_errno($mysqli)
+                                            . ": " . mysqli_error($mysqli)) . "</p>";
+
+                                    $tableName = "Customers";
+
+                                    $SQLstring1 = "SELECT * FROM $tableName WHERE c_name = '$name' AND c_pass = '$password'";
+
+                                    $result = $mysqli->query($SQLstring1);
+                                    $numrows = mysqli_num_rows($result);
+            if($numrows)
+               {
+               #echo 'Hello';
+                   header("Location: http://localhost/index.html");
+
+               }
+            else
+               {
+                header("Location: http://localhost/login_new.php");
+                echo 'Enter valid credentials';
+                   
+                }
+
+    }
+}
+
+
+?>
+
+Explanation: This section of code validates user by searching credentials if they are already present in the customer table in motelpro database then it redirects to Home page other wise it redirects to the same page to enter correct credentials.
+
+
+HOME PAGE
+
+<meta charset="utf-8">
+    <title> Magestic Hotel</title>
+     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <script type="text/javascript" src="dist/slick.js"></script>
+     <script type="text/javascript" src="dist/jquery.scrollUp.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/slick.css">
+
+
+<!--    <link rel="stylesheet" type="text/css" href="css/slick-theme.css">-->
+
+
+         <script type="text/javascript" src="dist/demo.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+Explanation: This code runs after successful registration or login. The above code is all about user interface. We have added few css and js attributes for better view.
+
+<div>
+            <ul>
+                <li class="tm-list"><a href="index.html">Home</a></li>
+                <li class="tm-list"><a href="explore.html">Explore </a></li>
+                <li class="tm-list"><a href="rooms.html">Rooms</a></li>
+                <li class="tm-list"><a href="book.php">Booking</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            </div>
+Explanation: In the above code, we see the button functionality. On click of home, index.html function is invoked. On click of Explore, explore.html is invoked. On click of rooms, rooms. Html is invoked. On click of booking, book.php is invoked. On click of any button different page needs to be called.
+
+  <section class="slider room flex">
+
+                    <div class="tm-rooms">
+                        <img  src="images/luxury.png">
+                       <a href="rooms.html"> <p class="s">Luxury Suite</p> </a>
+
+                    </div>
+                        <div class="tm-rooms">
+                        <img  src="images/delux.png">
+                            <a href="rooms.html"> <p class="s">Delux Suite</p></a>
+
+                    </div>
+                        <div class="tm-rooms">
+                        <img  src="images/premier.png">
+                            <a href="rooms.html">  <p>Premier Suite</p></a>
+
+                    </div>
+                    <div class="tm-rooms">
+                        <img  src="images/luxuryroom.png">
+                       <a href="rooms.html"> <p class="s">Luxury Room</p> </a>
+
+                    </div>
+                        <div class="tm-rooms">
+                        <img  src="images/deluxroom.png">
+                            <a href="rooms.html"> <p>Delux Room</p></a>
+
+                    </div>
+                        <div class="tm-rooms">
+                        <img  src="images/premiumroom.png">
+                            <a href="rooms.html">  <p>Premier Room</p></a>
+
+                    </div>
+
+
+    </section>
+Explanation:
+
+<section class="tm-servicesection">
+         <div class="tm-service">
+              <img class="tm-serimage" src="images/bell.png">
+             <div>
+                        <p class="b">Room Service</p>
+                        <p> Everything in just a press of button right next to your bed </p> </div>
+        </div>
+        <div class="tm-service">
+              <img class="tm-serimage" src="images/coffee.png">
+             <div>
+                        <p class="b">Free Food</p>
+                        <p>Choose a coffee from our wide range of exotic blends combined with free lunch.</p> </div>
+        </div>
+    </section>
+    <section class="tm-servicesection">
+
+        <div class="tm-service">
+              <img class="tm-serimage" src="images/car-front.png">
+             <div>
+                        <p class="b">Free Parking</p>
+                        <p> Just drop off your keys at the valet desk and get the keys straight to your room. </p> </div>
+        </div>
+        <div class="tm-service">
+              <img class="tm-serimage" src="images/spa.png">
+             <div>
+                        <p class="b">Free Spa</p>
+                        <p> In the end you want something to soothe you. Don't you ? Enjoy free spa pool side every evening. </p> </div>
+        </div>
+
+    </section>
+
+Explanation: This section of code shows all the complementary features that the motel is providing to the customers. Here we are adding the images, sliding the images on the page for better view.
+
+<div class="tm-us">
+        <p class="bold">About Us</p>
+        <p>We are a part of chain of luxury hotels
+            which extend all over the world while
+            provide a luxurious stay with various value
+            added and free services which will make
+            you visit us over and over again.</p>
+        </div>
+
+        <div class="tm-address">
+        <p class="bold">Address</p>
+        <p> 1234 Bernard Highway,Denton,TX,76201.
+            Phone : 123-456-7890
+        </p>
+        </div>
+
+Explanation: This section “about us” speaks about things about the motel, how it started and how they are exploring in the world. We will try to include the “about us” section in all the pages in the footer section.
+
+CONTACT US
+
+<header class="tm-header">
+        <img class="tm-logo" src="images/Majestic_Hotel_hd.png" alt="Majestic Hotel">
+        <nav class="tm-nav">
+       <div>
+            <ul>
+                <li class="tm-list"><a href="index.html">Home</a></li>
+                <li class="tm-list"><a href="explore.html">Explore</a></li>
+                <li class="tm-list"><a href="rooms.html">Rooms</a></li>
+                <li class="tm-list"><a href="bb.html">Booking</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>    
+            </div>
+        </nav>
+    </header>
+
+Explanation: We are including all the buttons in every page, so on click of these buttons the respective pages are triggered.
+
+<section class="tm-main">
+           <p>Contact</p>
+    </section>
+    
+        
+    <section class="tm-booking">
+    
+    <form>
+        <div class="tm-form1">
+    <input type="text" name="name" placeholder="Name">  
+    <input type="email" name="email" placeholder="E-mail"> 
+            <textarea  placeholder="Your message..." rows="4" ></textarea>
+   
+            <input type="submit" id="sub2" value="Send">
+
+    </div>
+        </form>
+
+Explanation: As this is the contact section, we have the contact heading in the top of the page. In this page, we have the name, email id and the your message.. fields. The customer can enter his questions or reviews in this section and we will add the reviews on the home page.
+
+
+
+
+
+
+
